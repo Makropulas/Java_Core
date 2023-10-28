@@ -3,8 +3,9 @@ package gb.javacore.dz3;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private String fullName;
     private String position;
     private String phone;
@@ -79,7 +80,24 @@ public class Employee {
         return employee - comparisonDate;
     }
 
-    public int compare(Employee comparable) {
-        return birthdate.compareTo(comparable.birthdate);
+    @Override
+    public int compareTo(Employee employee) {
+        return employee.birthdate.compareTo(birthdate);
+    }
+
+    static class ReverseAgeComparator implements Comparator<Employee> {
+
+        @Override
+        public int compare(Employee emp1, Employee emp2) {
+            return emp1.birthdate.compareTo(emp2.birthdate);
+        }
+    }
+
+    static class SalaryComparator implements Comparator<Employee> {
+
+        @Override
+        public int compare(Employee emp1, Employee emp2) {
+            return Integer.compare(emp1.salary, emp2.salary);
+        }
     }
 }
